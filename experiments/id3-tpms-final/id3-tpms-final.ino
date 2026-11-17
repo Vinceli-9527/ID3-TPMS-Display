@@ -1,7 +1,6 @@
 /*
- * id3-tpms-final —— 完全按 REA 逆向出的协议实现
+ * id3-tpms-final —— 按实测通信格式实现
  *
- * 逆向来源：LYTPMS 1.0.8.821 的 com.wicarlink.zl.util.BleUtil
  *   数据帧：55 AA 0A ?? idx pLo t+50 alarm vHi|pHi2 crc
  *           pressure_kPa = (((b[8]&3)<<8) | b[5]) * 2.5
  *           temp_C      = b[6] - 50
@@ -117,7 +116,7 @@ static void draw() {
   fitted(g_conn ? "BOOT = disc" : "BOOT = connect", 206, 0xFD20);
 }
 
-/* ---- 按逆向结果构造命令 ---- */
+/* ---- 命令构造 ---- */
 static void xorFinish(uint8_t* b, uint8_t n) {
   uint8_t x = 0;
   for (uint8_t i = 0; i + 1 < n; i++) x ^= b[i];
@@ -141,7 +140,7 @@ static void sendPair(uint8_t id) {
   Serial.printf("[TX] pair id=%u\r\n", id);
 }
 
-/* ---- 按逆向结果解析 55AA0A 帧 ---- */
+/* ---- 解析 55AA0A 帧 ---- */
 static void parseFrame(const uint8_t* b, size_t n) {
   if (n < 10) return;
   if (!(b[0] == 0x55 && b[1] == 0xAA && b[2] == 0x0A)) return;
@@ -255,7 +254,7 @@ void setup() {
   lcd.init();
   lcd.setBrightness(255);
   draw();
-  Serial.printf("\r\n=== final (REA 协议) ===\r\n");
+  Serial.printf("\r\n=== final ===\r\n");
   BLEDevice::init("id3-tpms");
   BLEScan* sc = BLEDevice::getScan();
   sc->setAdvertisedDeviceCallbacks(new CB(), true);

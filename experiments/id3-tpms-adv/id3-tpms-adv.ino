@@ -1,11 +1,8 @@
 /*
- * id3-tpms-adv —— 最终版：纯广播解析（REA 逆向结果直接落地）
+ * id3-tpms-adv —— 纯广播解析版
  *
- * 逆向来源：LYTPMS 1.0.8.821
- *   BaseTireBleService2.handScanDevice:
+ * 通信格式：本项目实测整理
  *     scanRecord.getBytes() 前 7 字节 = 02 01 06 03 03 B0 FB
- *     取 hex.substring(14,52) = 19 字节 → TireBean.parse
- *   TireBean.parse:
  *     voltage     = b[4] * 0.01 + 1.22
  *     pressure    = b[5] * 3.144 kPa ; 若 b[10]==1 → (b[5]+256)*3.144
  *     temperature = b[6] - 55
@@ -111,7 +108,7 @@ static void draw() {
 }
 
 static void handleAdv(const uint8_t* p, size_t n, const char* mac, int8_t rssi) {
-  // 逆向所得：前 7 字节必须是 02 01 06 03 03 B0 FB
+  // 实测：前 7 字节必须是 02 01 06 03 03 B0 FB
   if (n < 26) return;
   if (!(p[0] == 0x02 && p[1] == 0x01 && p[2] == 0x06 &&
         p[3] == 0x03 && p[4] == 0x03 && p[5] == 0xB0 && p[6] == 0xFB)) return;
@@ -168,7 +165,7 @@ void setup() {
   lcd.init();
   lcd.setBrightness(255);
   draw();
-  Serial.printf("\r\n=== adv parser (REA 协议) ===\r\n");
+  Serial.printf("\r\n=== adv parser ===\r\n");
   BLEDevice::init("id3-tpms-adv");
   BLEScan* sc = BLEDevice::getScan();
   sc->setAdvertisedDeviceCallbacks(new CB(), true);

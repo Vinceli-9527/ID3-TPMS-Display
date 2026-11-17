@@ -4,7 +4,7 @@
 
 首个可用版本（归档于 releases/v0.1.0）。
 
-- 协议来源：REA + jadx 反编译 LYTPMS 1.0.8.821（BaseTireBleService2.handScanDevice / TireBean.parse）
+- 通信格式：本项目通过实测抓取广播帧整理，并经与传感器读数比对验证
 - 纯广播解析：adv 帧头 02 01 06 03 03 B0 FB，19 字节载荷
 - 压力 3.144 kPa/LSB、温度 b[6]-55、电压 b[4]*0.01+1.22、ID = b[18]b[17]b[16]
 - 圆屏四轮显示、低压变色、数据时效、状态灯
