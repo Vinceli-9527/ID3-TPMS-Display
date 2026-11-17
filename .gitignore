@@ -1,0 +1,17 @@
+# 本地工具与临时产物（一切点文件/目录，除 .gitignore）
+.*
+!.gitignore
+
+# Arduino / 构建产物
+.build*/
+.tmp/
+
+# 待手动删除（被进程占用，勿提交）
+esp32-ble-tpms-probe/
+
+# IDE / 系统
+.vscode/
+.idea/
+*.log
+Thumbs.db
+.DS_Store
