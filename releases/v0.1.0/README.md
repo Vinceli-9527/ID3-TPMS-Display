@@ -64,7 +64,7 @@
 ### 烧录
 
 ```bash
-arduino-cli upload -p COM5 --fqbn "esp32:esp32:esp32c3:CDCOnBoot=cdc" --input-dir <本目录> id3-tpms-ui-v0.1.0
+arduino-cli upload -p <你的端口，如 COM5> --fqbn "esp32:esp32:esp32c3:CDCOnBoot=cdc" --input-dir . id3-tpms-ui-v0.1.0
 ```
 
 目录内已含 `id3-tpms-ui-v0.1.0.bin` / `bootloader.bin` / `partitions.bin`。
